@@ -1,0 +1,206 @@
+git commands
+------------------------------------------------------------------------------
+git -v
+git init
+git add .
+git commit -m "the comment"
+git status
+git log                             
+git branch                          - list all the branches in the repository
+git branch <name>                   - creates a new branch
+git branch -D feature-restructure   - deletes the branch
+git checkout master
+git checkout feature-restructure
+git checkout -b feature-section     - creates a new branch and checksout
+git merge feature-restructure       - merges the feature-restructure branch into curent branch 
+git revert <id>                     - revert changes of commit by creating a new commit
+git reset                           - remove the changes in current branch
+git reset --hard <id>               - undo changes by deleting all commits since <id> and lose all the history
+git revert <name>                   - remove the changes made in a file in the current branch
+
+------------------------------------------------------------------------------
+
+token
+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
+
+
+github commands
+------------------------------------------------------------------------------
+git remote
+git remote get-url origin
+git remote add origin https://github.com/sammy107/github-crash-course.git
+git remote set-url origin https://sammy107@github.com/sammy107/github-crash-course.git
+git git push origin master
+git push --set-upstream origin master
+git push origin feature-section
+git push
+git pull
+git clone https://github.com/sammy107/github-crash-course.git git-demo
+git remote
+git remote get-url origin
+------------------------------------------------------------------------------
+
+github markdown
+------------------------------------------------------------------------------
+READMEE.md
+    md=markdown
+
+
+github actions
+------------------------------------------------------------------------------
+key elements
+repository
+    -workflows - one or more - trigger upon events
+        - jobs - one or more - define a Runner - run in parallel by default but can be configured sequential - can be conditional
+            -steps - one or more - execute a shell script or an Action - executed in order - can be conditional 
+                -action - can use custom or 3rd party actions
+
+github actions events: Events that trigger workflows
+    https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+
+Actions
+    checkout: checout is an action created by GitHub: 
+    https://github.com/actions/checkout
+
+github actions context
+https://docs.github.com/en/actions/learn-github-actions/contexts
+
+github actions functions (expressions)
+https://docs.github.com/en/actions/learn-github-actions/expressions
+
+
+github Workflows and Events deep dive
+------------------------------------------------------------------------------
+Activity types 
+    For pull_request, default activity is opened, synchronize, or opened
+
+Event filters
+    workflow syntax
+    https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+    
+    filters:
+        branches
+
+Canceling and skipping workflows
+https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs
+
+
+
+job artifacts & outputs
+------------------------------------------------------------------------------
+upload artifacts
+https://github.com/actions/upload-artifact
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: |
+            dist
+            package.json
+
+
+
+environment variables and secrets
+------------------------------------------------------------------------------
+default environment variables:
+    https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+
+mongodb:
+    Atlas MongoDB
+    email: samoberoi07@gmail.com
+    pwd: Voila@1221
+    Cluser name: gh-cluster
+    tag: application: gh
+    username: sammy107
+    pwd: pVBPaTw60O3Zz3g4
+    my ip address: 72.135.245.147/32
+
+    env:  
+      MONGODB_CLUSTER_ADDRESS: gh-cluster.khflgmj.mongodb.net
+      MONGODB_USERNAME: sammy107
+      MONGODB_PASSWORD: pVBPaTw60O3Zz3g4
+      PORT: 8080 
+
+    connection string:     
+        mongodb+srv://sammy107:<password>@gh-cluster.khflgmj.mongodb.net/?retryWrites=true&w=majority
+
+    full sample code:
+        const { MongoClient, ServerApiVersion } = require('mongodb');
+        const uri = "mongodb+srv://sammy107:<password>@gh-cluster.khflgmj.mongodb.net/?retryWrites=true&w=majority";
+        // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+        const client = new MongoClient(uri, {
+        serverApi: {
+            version: ServerApiVersion.v1,
+            strict: true,
+            deprecationErrors: true,
+        }
+        });
+        async function run() {
+        try {
+            // Connect the client to the server	(optional starting in v4.7)
+            await client.connect();
+            // Send a ping to confirm a successful connection
+            await client.db("admin").command({ ping: 1 });
+            console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+        }
+        run().catch(console.dir);
+
+
+
+controlling workflow and job exection
+------------------------------------------------------------------------------
+https://docs.github.com/en/actions/learn-github-actions/contexts
+
+special condition functions
+    failure()
+    success()
+    always()
+    cancelled()
+
+conditional steps
+    eg.
+     if: failure()
+
+conditional jobs
+    cache-hit
+    eg. 
+     if: steps.cache.outputs.cache-hit != 'true'
+
+ignoring errors and failures using syntax 
+    "continue-on-error"
+
+matrix strategies
+    include and exclude values
+
+
+
+Jobs and docker containers
+------------------------------------------------------------------------------
+run jobs in containers
+
+service containers
+
+
+
+custom actions
+------------------------------------------------------------------------------
+why cistomer actions?
+    - simplify workflow steps - multiple actions can be grouped into single action
+    - when no public community action available
+    - can be used to perform a specific logic to solve a problem
+
+types of custom actions
+    - javascript actions - execute a js (nodejs) file
+    - docker actions - contanerized (dockerfile) actions - any language can be used with dockerfile
+    - composite actions - combine multiple workflow steps on a single action - eg. combine run commands and uses actions
+
+
+
+
+
+current:
+https://gale.udemy.com/course/github-actions-the-complete-guide/learn/lecture/34140440#notes
